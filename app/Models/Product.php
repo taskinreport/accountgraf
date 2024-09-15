@@ -11,7 +11,7 @@ class Product extends Model
 
     // Tabloda izin verilen alanlar
     protected $fillable = [
-        'name', 'type', 'email_quota', 'price', 'currency', 'description'
+        'name', 'type', 'email_quota', 'price', 'currency', 'description', 'is_custom'
     ];
 
     protected $casts = [
