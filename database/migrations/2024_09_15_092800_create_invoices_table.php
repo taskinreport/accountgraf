@@ -18,11 +18,16 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2);  // Fatura toplam tutarı (1.000,00TL, 1.000,00GBP, 1.000,00USD)
             $table->date('invoice_date');            // Fatura tarihi (dd-mm-yyyy)
             $table->string('invoice_number')->unique(); // Fatura no (INV-000XXX)
-            $table->string('invoice_currency');        // Fatura para birimi (TRY, GBP, USD)
-            $table->string('invoice_exchange_rate');   // Fatura döviz kuru (1.000,00)
+            $table->string('invoice_currency');        // Fatura para birimi
+            $table->string('invoice_exchange_rate', 10, 4);   // Fatura döviz kuru
             $table->string('invoice_description');     // Fatura açıklaması
             $table->string('invoice_status');          // Fatura durumu
             $table->string('invoice_due_date');        // Fatura vadesi
+            $table->string('invoice_payment_status')->nullable();  // Fatura ödeme durumu
+            $table->string('invoice_payment_method')->nullable();  // Fatura ödeme yöntemi (wise try or wise gb or wise usd, stripe try or stripe gb or stripe usd, paypal try or paypal gb or paypal usd, cash, bank transfer)
+            $table->string('invoice_payment_date')->nullable();    // Fatura ödeme tarihi
+            $table->string('invoice_payment_currency')->nullable();// Fatura ödeme para birimi
+            $table->string('invoice_payment_exchange_rate', 10, 4)->nullable(); // Fatura ödeme döviz kuru
 
         });
     }

@@ -18,6 +18,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
+use Ysfkaya\FilamentPhoneInput\Tables\PhoneColumn;
+use Ysfkaya\FilamentPhoneInput\Infolists\PhoneEntry;
+use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 
 class CustomerResource extends Resource
 {
@@ -28,16 +32,51 @@ class CustomerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                //
-            ]);
+        ->schema([
+            TextInput::make('company_name')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('email')
+                ->email()
+                ->required()
+                ->maxLength(255),
+            PhoneInput::make('phone')
+                ->required()
+                ->defaultCountry('TR')
+                ->focusNumberFormat(PhoneInputNumberType::E164)
+                ->countryStatePath('phone_country'),
+            TextInput::make('account_name')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\DatePicker::make('account_start_date')
+                ->required(),
+            Forms\Components\DatePicker::make('notification_date')
+                ->required(),
+            Select::make('status')
+                ->options([
+                    'active' => 'Active',
+                    'renewal' => 'Renewal',
+                    'archived' => 'Archived',
+                ])
+                ->required(),
+            Select::make('product_id')
+                ->relationship('product', 'name')
+                ->required(),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('company_name')->searchable(),
+                TextColumn::make('email')->searchable(),
+                TextColumn::make('phone'),
+                TextColumn::make('account_name'),
+                TextColumn::make('account_start_date')->date(),
+                TextColumn::make('notification_date')->date(),
+                TextColumn::make('status'),
+                TextColumn::make('product.name')->label('Product'),
             ])
             ->filters([
                 //
@@ -55,7 +94,8 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\InvoicesRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class,
         ];
     }
 
