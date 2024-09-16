@@ -13,9 +13,15 @@ class Invoice extends Model
     protected $fillable = [
         'customer_id', 'total_amount', 'invoice_date', 'invoice_number',
         'invoice_currency', 'invoice_exchange_rate', 'invoice_description',
-        'invoice_status', 'invoice_due_date', 'invoice_payment_status',
-        'invoice_payment_method', 'invoice_payment_date',
-        'invoice_payment_currency', 'invoice_payment_exchange_rate'
+        'invoice_status', 'invoice_due_date'
+
+        // 'invoice_payment_status',
+        // 'invoice_payment_method', 'invoice_payment_date',
+        // 'invoice_payment_currency', 'invoice_payment_exchange_rate'
+    ];
+
+    protected $casts = [
+        'invoice_exchange_rate' => 'decimal:4',
     ];
 
     // Fatura bir müşteriye aittir

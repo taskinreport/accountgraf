@@ -11,8 +11,8 @@ class Customer extends Model
 
     // Tabloda izin verilen alanlar (mass-assignment protection için)
     protected $fillable = [
-        'company_name', 'email', 'phone', 'account_name', 'account_start_date',
-        'paid_amount', 'notification_date', 'status', 'product_id'
+        'company_name', 'email', 'phone', 'account_name', 'account_start_date', 'account_start_month', 'account_start_year',
+        'notification_date', 'status', 'product_id'
     ];
 
     // Müşteri ile birden çok fatura ilişkisi
