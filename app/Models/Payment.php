@@ -16,6 +16,10 @@ class Payment extends Model
         'payment_currency', 'payment_exchange_rate'
     ];
 
+    protected $casts = [
+        'payment_exchange_rate' => 'decimal:4',
+    ];
+
     // Ödeme bir müşteriye aittir
     public function customer()
     {
