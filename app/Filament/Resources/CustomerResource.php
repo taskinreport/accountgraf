@@ -66,6 +66,12 @@ class CustomerResource extends Resource
 
 
 
+
+            Forms\Components\DatePicker::make('account_start_date')
+                ->required(),
+            Forms\Components\DatePicker::make('notification_date')
+                ->required(),
+
             Select::make('status')
                 ->options([
                     'active' => 'Active',
