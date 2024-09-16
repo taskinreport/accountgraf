@@ -48,10 +48,30 @@ class CustomerResource extends Resource
             TextInput::make('account_name')
                 ->required()
                 ->maxLength(255),
+            // Forms\Components\DatePicker::make('account_start_date')
+            //     ->required(),
+            Forms\Components\DatePicker::make('notification_date')
+                ->required(),
+            Forms\Components\DatePicker::make('account_start_date')
+                ->required()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    if ($state) {
+                        $date = \Carbon\Carbon::parse($state);
+                        $set('account_start_month', $date->month);
+                        $set('account_start_year', $date->year);
+                    }
+                }),
+            Forms\Components\Hidden::make('account_start_month'),
+            Forms\Components\Hidden::make('account_start_year'),
+
+
+
+
             Forms\Components\DatePicker::make('account_start_date')
                 ->required(),
             Forms\Components\DatePicker::make('notification_date')
                 ->required(),
+
             Select::make('status')
                 ->options([
                     'active' => 'Active',
@@ -74,12 +94,28 @@ class CustomerResource extends Resource
                 TextColumn::make('phone'),
                 TextColumn::make('account_name'),
                 TextColumn::make('account_start_date')->date(),
+                TextColumn::make('account_start_month')->label('Ay'),
+                TextColumn::make('account_start_year')->label('Yıl'),
                 TextColumn::make('notification_date')->date(),
                 TextColumn::make('status'),
                 TextColumn::make('product.name')->label('Product'),
             ])
             ->filters([
-                //
+                // Filtreleme işlemleri
+                Tables\Filters\SelectFilter::make('account_start_month')
+                ->options([
+                    1 => 'Ocak', 2 => 'Şubat', 3 => 'Mart', 4 => 'Nisan',
+                    5 => 'Mayıs', 6 => 'Haziran', 7 => 'Temmuz', 8 => 'Ağustos',
+                    9 => 'Eylül', 10 => 'Ekim', 11 => 'Kasım', 12 => 'Aralık'
+                ])
+                ->attribute('account_start_month'),
+            Tables\Filters\SelectFilter::make('account_start_year')
+                ->options(function () {
+                    $currentYear = date('Y');
+                    $years = range($currentYear - 7, $currentYear);
+                    return array_combine($years, $years);
+                })
+                ->attribute('account_start_year'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
