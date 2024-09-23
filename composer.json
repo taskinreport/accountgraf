@@ -9,6 +9,9 @@
         "filament/filament": "^3.0-stable",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
+        "psr/simple-cache": "^2.0",
+        "pxlrbt/filament-excel": "^2.3",
         "ysfkaya/filament-phone-input": "^3.1"
     },
     "require-dev": {
@@ -64,6 +67,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }
