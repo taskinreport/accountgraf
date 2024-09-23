@@ -7,6 +7,8 @@ use App\Models\Invoice;
 use App\Observers\InvoiceObserver;
 use App\Models\Payment;
 use App\Observers\PaymentObserver;
+use Illuminate\Support\Facades\Log; // Bu satırı ekleyin
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,13 @@ class AppServiceProvider extends ServiceProvider
         //
         Invoice::observe(InvoiceObserver::class);
         Payment::observe(PaymentObserver::class);
+
+        \DB::listen(function($query) {
+            Log::info(
+                $query->sql,
+                $query->bindings,
+                $query->time
+            );
+        });
     }
 }

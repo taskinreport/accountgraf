@@ -13,7 +13,6 @@ class Customer extends Model
     protected $fillable = [
 
         'company_name', 'email', 'phone', 'account_name', 'account_start_date', 'account_start_month', 'account_start_year',
-        'company_name', 'email', 'phone', 'account_name', 'account_start_date',
         'notification_date', 'status', 'product_id'
     ];
 
